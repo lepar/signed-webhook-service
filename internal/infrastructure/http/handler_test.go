@@ -92,7 +92,7 @@ func TestHandler_HandleWebhook(t *testing.T) {
 				"X-Nonce":     "test-nonce-2",
 				"X-Signature": "valid-signature",
 			},
-			wantStatus: http.StatusInternalServerError, // Use case validation returns error, handler returns 500
+			wantStatus: http.StatusBadRequest, // Invalid JSON should return 400 Bad Request
 		},
 		{
 			name:   "validator error",
