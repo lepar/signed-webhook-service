@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  kii:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kii-webhook-service
+    ports:
+      - "8080:8080"
+    environment:
+      - CONFIG_ENV=local
+      - KII_SERVER_PORT=8080
+      - KII_WEBHOOK_HMAC_SECRET=${HMAC_SECRET:-default-secret-key-change-in-production}
+      - KII_WEBHOOK_TIMESTAMP_TOLERANCE=5m
+    volumes:
+      # Mount config directory for easy config updates
+      - ./cmd/config:/app/cmd/config:ro
+    restart: unless-stopped
+
